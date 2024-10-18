@@ -24,16 +24,10 @@
 </head>
 
 <body>
-    <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
-        <div class="container text-light">
-            
+        <div class="container text-light">  
         </div>
     </nav>
-    <!-- Close Top Nav -->
-
-
-    <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
@@ -82,21 +76,42 @@
 
 
     <!-- Start Content Page -->
-    <div class="col-md-6 m-auto text-center" style="font-family: Arial, sans-serif; color: #333;">
-        <h1 style="font-size: 2.5em; color: #59ab6e;">Contáctanos</h1>
-        <h2 style="font-size: 2em; color: #333;">¡Nos encantaría saber de ti!</h2>
-        <p style="font-size: 1.2em; line-height: 1.6;">Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte y nos esforzamos por responder a todas las consultas.</p>
-        <h3 style="font-size: 1.8em; color: #333;">Información de Contacto</h3>
-    
-        <p style="font-size: 1.2em;">
-        <b style="color: #59ab6e;">Email:</b> gou2udec@gmail.com
+    <div class="col-md-8 m-auto text-center" style="font-family: 'Arial', sans-serif; color: #333;">
+        <h1 class="display-4" style="color: #59ab6e;">Contáctanos</h1>
+        <h2 class="display-5 mb-4" style="color: #333;">¡Nos encantaría saber de ti!</h2>
+        <p class="lead" style="font-size: 1.2em; line-height: 1.6; margin-bottom: 2rem;">
+            Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte y nos esforzamos por responder a todas las consultas.
         </p>
-    
-        <h3 style="font-size: 1.8em; color: #333;">Horario de Atención</h3>
-    
-        <p style="font-size: 1.2em;">Estamos disponibles para atenderte de lunes a viernes, de 9:00 a 15:00.</p>
-    
+        <h3 class="display-6" style="color: #333;">Información de Contacto</h3>
+        <p class="lead" style="font-size: 1.2em; margin-bottom: 2rem;">
+            <b style="color: #59ab6e;">Email:</b> gou2udec@gmail.com
+        </p>
+        <h3 class="display-6" style="color: #333;">Horario de Atención</h3>
+        <p class="lead" style="font-size: 1.2em;">
+            Estamos disponibles para atenderte de lunes a viernes, de 9:00 a 15:00.
+        </p>
     </div>
+    
+    <style>
+        /* Asegúrate de incluir Bootstrap CSS para utilizar las clases de tipografía */
+        .display-4 {
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+        .display-5 {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+        .display-6 {
+            font-size: 1.75rem;
+            font-weight: 300;
+        }
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+    </style>
+    
     
 
     <!-- Start Contact -->
@@ -104,26 +119,39 @@
         <div style="text-align: center;">
             <h3 style="font-size: 2em; color: #59ab6e; font-family: 'Arial', sans-serif;">Formulario de Contacto</h3>
         </div>
-        {% csrf_token %}
         <div class="row py-5">
-            <form class="col-md-9 m-auto" method="post" role="form" style="background-color: #f8f9fa; padding: 30px; border-radius: 15px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
+            <!-- Mensajes de alerta -->
+            <div class="col-md-9 m-auto">
+                {% if messages %}
+                    <div class="alert-container">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <!-- Formulario -->
+            <form class="col-md-9 m-auto" method="post" action="{% url 'send_email' %}" role="form" style="background-color: #f8f9fa; padding: 30px; border-radius: 15px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);">
+                {% csrf_token %}
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="inputname" style="font-weight: bold;">Nombre</label>
-                        <input type="text" class="form-control mt-1" id="name" name="name" placeholder="Nombre" style="border-radius: 5px; border: 1px solid #59ab6e;">
+                        <input type="text" class="form-control mt-1" id="name" name="name" placeholder="Nombre" style="border-radius: 5px; border: 1px solid #59ab6e;" required>
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="inputemail" style="font-weight: bold;">Email</label>
-                        <input type="email" class="form-control mt-1" id="email" name="email" placeholder="Email" style="border-radius: 5px; border: 1px solid #59ab6e;">
+                        <input type="email" class="form-control mt-1" id="email" name="email" placeholder="Email" style="border-radius: 5px; border: 1px solid #59ab6e;" required>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="inputsubject" style="font-weight: bold;">Asunto</label>
-                    <input type="text" class="form-control mt-1" id="subject" name="subject" placeholder="Asunto" style="border-radius: 5px; border: 1px solid #59ab6e;">
+                    <input type="text" class="form-control mt-1" id="subject" name="subject" placeholder="Asunto" style="border-radius: 5px; border: 1px solid #59ab6e;" required>
                 </div>
                 <div class="mb-3">
                     <label for="inputmessage" style="font-weight: bold;">Mensaje</label>
-                    <textarea class="form-control mt-1" id="message" name="message" placeholder="Mensaje" rows="8" style="border-radius: 5px; border: 1px solid #59ab6e;"></textarea>
+                    <textarea class="form-control mt-1" id="message" name="message" placeholder="Mensaje" rows="8" style="border-radius: 5px; border: 1px solid #59ab6e;" required></textarea>
                 </div>
                 <div class="row">
                     <div class="col text-end mt-2">
@@ -134,28 +162,17 @@
         </div>
     </div>
     
-  
+    <style>
+        /* Estilos para los mensajes de alerta */
+        .alert-container {
+            margin-bottom: 20px; /* Espacio entre los mensajes y el formulario */
+        }
+        .alert {
+            margin-bottom: 10px; /* Espacio entre mensajes individuales */
+        }
+    </style>
     
 
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $name = $_POST["name"];
-        $email = $_POST["email"];
-        $subject = $_POST["subject"];
-        $message = $_POST["message"];
-
-        $to = "gou2udec@gmail.com";
-        $headers = "From: $email";
-
-        if (mail($to, $subject, $message, $headers)) {
-            echo "Email enviado correctamente";
-        } else {
-            echo "Hubo un error al enviar el email";
-        }
-    }
-    ?>
-              
-    <!-- End Contact -->
 
 
     <!-- Start Footer -->

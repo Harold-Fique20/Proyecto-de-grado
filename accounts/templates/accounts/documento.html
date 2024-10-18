@@ -114,9 +114,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                <li class="active"><a href="{% url 'principal' %}"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                <li><a href="{% url 'reporteRutas' %}"><i class="fa fa-circle-o"></i> Reporte Rutas</a></li>
+                <li><a href="{% url 'reporte_municipio' %}"><i class="fa fa-circle-o"></i> Reporte Municipios</a></li>
+                <li><a href="{% url 'reporteUsuariosDestacados' %}"><i class="fa fa-circle-o"></i> Reporte Usuarios Destacados</a></li>
               </ul>
             </li>
 
@@ -146,49 +146,205 @@
         </section>
       </aside>
       <!-- AQUI VA LO DE LA PÁGINA PRINCIPAL -->
-      <div class="content-wrapper">
-        <!-- SECCIÓN DE TEXTO -->
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                          <h3 class="box-title"><strong>Información Importante</strong></h3>
-                        </div><!-- /.box-header -->
-                        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+      <div class="content-wrapper" style="padding: 20px; background-color: #f5f5f5; margin-top: 60px;">
+        <!-- Título estático -->
+        <center><h2 style="color: #333; font-size: 24px; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">Solicitudes para la validación de documentos.</h2></center>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div style="display: flex; align-items: flex-start; height: 100vh; overflow-y: hidden;">
+            <!-- Contenedor principal para los documentos -->
+            <div style="flex: 1; padding: 20px; height: calc(100vh - 60px); overflow-y: auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <p style="color: #666; font-size: 16px;">Listado de documentos en fase de revisión y determinación</p>
+                <div id="documentos">
+                    {% for registro in registros %}
+                    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                        <div style="margin-bottom: 15px;">
+                            <p style="font-weight: bold; color: #555;">Usuario ID: <span style="color: #333;">{{ registro.idusuario }}</span></p>
+                            <p style="font-weight: bold; color: #555;">Email: <span style="color: #333;">{{ registro.email }}</span></p>
+                            <p style="font-weight: bold; color: #555;">Matrícula: <span style="color: #333;">{{ registro.matricula }}</span></p>
+                        </div>
+    
+                        <!-- Mostrar documentos en formato base64 -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                            <!-- Lista de imágenes -->
+                            <div style="flex: 1; min-width: 200px;">
+                                <p style="font-weight: bold; color: #555; margin-bottom: 5px;">SOAT:</p>
+                                <img src="data:image/png;base64,{{ registro.soat }}" style="width: 100%; border-radius: 5px; cursor: pointer;" onclick="openModal(this)"/>
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <p style="font-weight: bold; color: #555; margin-bottom: 5px;">Licencia de Conducir (Frontal):</p>
+                                <img src="data:image/png;base64,{{ registro.licenciaConducirFrontal }}" style="width: 100%; border-radius: 5px; cursor: pointer;" onclick="openModal(this)"/>
+                            </div>
+                            <!-- Resto de las imágenes -->
+                            <div style="flex: 1; min-width: 200px;">
+                                <p style="font-weight: bold; color: #555; margin-bottom: 5px;">Licencia de Conducir (Posterior):</p>
+                                <img src="data:image/png;base64,{{ registro.licenciaConducirPosterior }}" style="width: 100%; border-radius: 5px; cursor: pointer;" onclick="openModal(this)"/>
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <p style="font-weight: bold; color: #555; margin-bottom: 5px;">Tarjeta de Propiedad (Frontal):</p>
+                                <img src="data:image/png;base64,{{ registro.tarjetaPropiedadFrontal }}" style="width: 100%; border-radius: 5px; cursor: pointer;" onclick="openModal(this)"/>
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <p style="font-weight: bold; color: #555; margin-bottom: 5px;">Tarjeta de Propiedad (Posterior):</p>
+                                <img src="data:image/png;base64,{{ registro.tarjetaPropiedadPosterior }}" style="width: 100%; border-radius: 5px; cursor: pointer;" onclick="openModal(this)"/>
+                            </div>
+                        </div>
+    
+                        <!-- Botones de aprobación o rechazo -->
+                        <div style="display: flex; gap: 5px; margin-top: 20px;">
+                          <!-- Formulario de aprobación -->
+                          <form method="post" action="{% url 'aprobar_registro' %}" style="flex: 1;">
+                              {% csrf_token %}
+                              <input type="hidden" name="registro_id" value="{{ registro.id }}">
+                              <button type="submit" name="accion" value="aprobar" style="
+                                  padding: 12px 25px; 
+                                  background: linear-gradient(135deg, #4CAF50, #388E3C); 
+                                  color: white; 
+                                  border: none; 
+                                  border-radius: 8px; 
+                                  cursor: pointer; 
+                                  font-weight: bold; 
+                                  text-transform: uppercase; 
+                                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                                  transition: background 0.3s, transform 0.3s; 
+                                  width: 200px; 
+                                  font-size: 14px;
+                              ">Aprobar</button>
+                          </form>
 
-                          <h2 style="text-align: center; font-weight: bold; color: #2c3e50;">Bloqueo de usuario</h2>
-                      
-                          <p><strong>Es restringir temporalmente su acceso y funcionalidades en el aplicativo.</strong> El usuario sigue existiendo en la base de datos, pero no puede iniciar sesión ni utilizar las funcionalidades del sistema. El tiempo estimado del bloqueo sería de <strong>15 días</strong>.</p>
-                      
-                          <h3 style="font-weight: bold; color: #2c3e50;">Condiciones para bloquear un usuario:</h3>
-                          <ul style="padding-left: 20px; list-style-type: disc;">
-                              <li><strong>Uso inapropiado de la plataforma:</strong> Los usuarios no deben utilizar los servicios del aplicativo para fines diferentes a los permitidos, como publicitar servicios no relacionados con GoU.</li>
-                              <li><strong>Puntualidad y compromiso:</strong> Los usuarios deben ser puntuales y cumplir con los viajes acordados. Cancelaciones repetidas sin justificación válida pueden considerarse incumplimiento.</li>
-                              <li><strong>Información veraz:</strong> Los usuarios deben proporcionar información precisa y actualizada en sus perfiles. Mentir sobre detalles como la identificación o el estado del vehículo (en el caso de los conductores) es una violación de las normas.</li>
-                              <li><strong>Quejas de Conductores/Usuarios:</strong> Varias quejas de conductores o pasajeros sobre la conducta del usuario durante los viajes, lo que justifica una revisión más profunda de su comportamiento.</li>
-                          </ul>
-                      
-                          <h2 style="text-align: center; font-weight: bold; color: #c0392b;">Eliminación de usuario</h2>
-                      
-                          <p><strong>La eliminación de un usuario es una acción permanente dependiendo del caso,</strong> implica la remoción total de la cuenta del sistema y la pérdida de acceso a los servicios del aplicativo. Esta medida se toma en casos donde las infracciones son graves o repetitivas.</p>
-                      
-                          <h3 style="font-weight: bold; color: #c0392b;">Motivos para la eliminación de un usuario:</h3>
-                          <ul style="padding-left: 20px; list-style-type: disc;">
-                              <li><strong>Acoso o intimidación:</strong> Un usuario ha sido reportado por múltiples personas por acosar o intimidar a otros durante un viaje. Como los comentarios sexuales inapropiados, amenazas verbales, o cualquier forma de violencia física o verbal.</li>
-                              <li><strong>Reincidencia:</strong> El usuario ha sido bloqueado en múltiples ocasiones y continúa mostrando un comportamiento que va en contra del respeto, la ética y la moral, sin signos de mejora o cumplimiento.</li>
-                              <li><strong>Solicitud del usuario:</strong> En el caso de que el usuario haya registrado información errónea, este puede solicitar la eliminación de su cuenta de manera formal, y tras la confirmación de identidad, se procede con la eliminación de todos sus datos personales y acceso al sistema, para registrarse nuevamente.</li>
-                              <li><strong>Robo o daño a propiedad:</strong> El usuario ha robado objetos de otro pasajero o conductor, o ha causado daños significativos al vehículo compartido, como vandalismo.</li>
-                              <li><strong>Abuso de información sensible:</strong> Uso de la información de otros usuarios para acosar, extorsionar o cometer otros actos ilegales.</li>
-                          </ul>
-                      
-                      </div>
-                      
-                    </div><!-- /.box -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </section><!-- /.content -->
-    </div><!-- /.content-wrapper -->
+                          <!-- Formulario de rechazo -->
+                          <button id="btn-rechazar" style="
+                              padding: 12px 25px; 
+                              background: linear-gradient(135deg, #f44336, #d32f2f); 
+                              color: white; 
+                              border: none; 
+                              border-radius: 8px; 
+                              cursor: pointer; 
+                              font-weight: bold; 
+                              text-transform: uppercase; 
+                              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                              transition: background 0.3s, transform 0.3s; 
+                              width: 200px; 
+                              font-size: 14px;
+                          ">Rechazar</button>
+                        </div>
+
+                        <!-- Contenedor para el formulario de rechazo -->
+                        <div id="form-rechazo" style="display: none; margin-top: 20px;">
+                          <form method="post" action="{% url 'rechazar_registro' %}" style="display: flex; flex-direction: column; gap: 10px;">
+                              {% csrf_token %}
+                              <input type="hidden" name="registro_id" value="{{ registro.id }}">
+                              
+                              <!-- Campo para ingresar el motivo del rechazo -->
+                              <textarea name="motivo_rechazo" rows="4" placeholder="Escribe el motivo del rechazo aquí..." style="
+                                  padding: 10px; 
+                                  border: 1px solid #ddd; 
+                                  border-radius: 5px; 
+                                  width: 100%; 
+                                  box-sizing: border-box;
+                              "></textarea>
+
+                              <!-- Botón para enviar el formulario -->
+                              <button type="submit" style="
+                                  padding: 12px 25px; 
+                                  background: linear-gradient(135deg, #f44336, #d32f2f); 
+                                  color: white; 
+                                  border: none; 
+                                  border-radius: 8px; 
+                                  cursor: pointer; 
+                                  font-weight: bold; 
+                                  text-transform: uppercase; 
+                                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                                  transition: background 0.3s, transform 0.3s; 
+                                  width: 100%; 
+                                  font-size: 14px;
+                              ">Confirmar Rechazo</button>
+                          </form>
+                        </div>
+
+                        <!-- Script para mostrar el formulario de rechazo -->
+                        <script>
+                          document.getElementById('btn-rechazar').addEventListener('click', function() {
+                              var formRechazo = document.getElementById('form-rechazo');
+                              if (formRechazo.style.display === 'none') {
+                                  formRechazo.style.display = 'block';
+                              } else {
+                                  formRechazo.style.display = 'none';
+                              }
+                          });
+                        </script>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal para visualizar imágenes en tamaño completo -->
+        <div id="imageModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); text-align: center;" onclick="closeModal(event)">
+            <img id="modalImage" style="max-width: 90%; max-height: 80vh; margin-top: 5%; border-radius: 10px;" />
+        </div>
+    
+        <script>
+            function openModal(img) {
+                var modal = document.getElementById("imageModal");
+                var modalImg = document.getElementById("modalImage");
+                modal.style.display = "block";
+                modalImg.src = img.src;
+            }
+    
+            function closeModal(event) {
+                // Cerrar el modal solo si el clic es en el fondo
+                if (event.target === document.getElementById("imageModal")) {
+                    document.getElementById("imageModal").style.display = "none";
+                }
+            }
+        </script>
+        <div style="margin-top: 30px;">
+          <form method="post" action="{% url 'gestion_costo_km' %}">
+              {% csrf_token %}
+              
+              <!-- Mostrar el valor actual del costo por kilómetro -->
+              <label for="kilometro" style="font-weight: bold; color: #555; margin-bottom: 10px;">Costo por kilómetro actual: {{ costo_km_actual }}</label>
+              
+              <!-- Campo para ingresar el nuevo valor del costo por kilómetro -->
+              <input type="number" name="kilometro" id="kilometro" step="0.01" min="0" placeholder="Ej: 500" style="
+                  padding: 10px; 
+                  border: 1px solid #ddd; 
+                  border-radius: 5px; 
+                  width: 100%; 
+                  box-sizing: border-box; 
+                  margin-bottom: 20px;
+              " required>
+              
+              <!-- Botón para guardar el nuevo valor -->
+              <button type="submit" style="
+                  padding: 12px 25px; 
+                  background: linear-gradient(135deg, #4CAF50, #388E3C); 
+                  color: white; 
+                  border: none; 
+                  border-radius: 8px; 
+                  cursor: pointer; 
+                  font-weight: bold; 
+                  text-transform: uppercase; 
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                  transition: background 0.3s, transform 0.3s; 
+                  width: 100%; 
+                  font-size: 14px;
+              ">Guardar</button>
+          </form>
+      </div>      
+    </div>
+    
+
     
     </div>
 

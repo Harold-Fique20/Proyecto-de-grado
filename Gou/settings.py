@@ -69,11 +69,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Gou.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com' # por ejemplo: 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465  
+EMAIL_USE_SSL = True  
+EMAIL_USE_TLS = False  
 EMAIL_HOST_USER = 'gou2udec@gmail.com' 
-EMAIL_HOST_PASSWORD = 'gou22024' 
+EMAIL_HOST_PASSWORD = 'fnmz tdas oydh wjvs'  
+
 
 
 
@@ -111,4 +113,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'accounts/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 

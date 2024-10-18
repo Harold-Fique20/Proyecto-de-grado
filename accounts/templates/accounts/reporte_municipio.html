@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Administración | Gou II</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="static/accounts/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="static/accounts/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/accounts/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      .logo {
+        color: #FFFFFF;
+        text-decoration: none;
+        font-family: 'Arial', sans-serif;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px #000000;
+      }
+      .logo .admin {
+        font-weight: normal;
+        color: #FFFFFF;
+      }
+    </style>
+  </head>
+  <body class="skin-green">
+    <div class="wrapper">
+      <header class="main-header">
+        <a href="{% url 'principal' %}" class="logo">
+          <span class="admin">{{ usuario.rol }}</span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only"></span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <img src="data:image/png;base64,{{ image_data }}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">{{ usuario.nombre }} {{ usuario.apellido }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="user-header">
+                    <img src="data:image/png;base64,{{ image_data }}" class="user-image" alt="User Image">
+                    <div style="text-align: center; padding: 20px;">
+                      <h2 style="margin: 0; font-size: 24px; color: #f1e9e9; font-weight: 600;">{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+                      <p style="margin: 5px 0; font-size: 18px; color: #eaeef3; font-weight: 500;">{{ usuario.rol }}</p>
+                      <small>Universidad de Cundinamarca</small>
+                    </div>
+                  </li>
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="{% url 'config' %}" class="btn btn-default btn-flat">Configuración</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="{% url 'login' %}" class="btn btn-default btn-flat">Cerrar sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="data:image/jpg;base64,{{ image_data }}" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+              <p>{{ usuario.nombre }} {{ usuario.apellido }}</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+
+          <ul class="sidebar-menu">
+            <li class="header">MENÚ PRINCIPAL</li>
+            <li class="active treeview">
+              <a href="{% url 'usuario' %}">
+                <i class="fa fa-users"></i>
+                <span>Usuarios</span>
+              </a>
+            </li>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i>
+                <span>Reportes</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'reporteRutas' %}"><i class="fa fa-circle-o"></i> Reporte Rutas</a></li>
+                <li><a href="{% url 'reporte_municipio' %}"><i class="fa fa-circle-o"></i> Reporte Municipios</a></li>
+                <li><a href="{% url 'reporteUsuariosDestacados' %}"><i class="fa fa-circle-o"></i> Reporte Usuarios Destacados</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{% url 'documento' %}">
+                <i class="fa fa-envelope"></i> <span>Documentación</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'resena' %}">
+                <i class="fa fa-th"></i> <span>Reseñas</span>
+              </a>
+            </li>
+            <li class="active treeview">
+              <a href="{% url 'cuentas' %}">
+                <i class="fa fa-user"></i>
+                <span>Administrador</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- Sección principal del contenido -->
+      <!-- HTML -->
+      <div class="content-wrapper">
+        <section class="content">
+          <div class="container">
+            <h2 style="text-align: center; margin-bottom: 20px;">Reporte de Municipios</h2> <!-- Título centrado con espacio debajo -->
+            <div class="row">
+              <div class="col-md-6">
+                <h3 style="margin-bottom: 10px;">Principales Municipios de Origen</h3> <!-- Espacio entre subtítulo y gráfico -->
+                <canvas id="originChart"></canvas>
+              </div>
+              <div class="col-md-6">
+                <h3 style="margin-bottom: 10px;">Principales Municipios de Destino</h3> <!-- Espacio entre subtítulo y gráfico -->
+                <canvas id="destinationChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+    </div>
+    <div style="text-align: right; margin-top: 10px;">
+      <a href="{% url 'descargar_municipios_pdf' %}" class="btn btn-danger" style="background-color: #ff0000; color: white;">
+          Descargar Municipios PDF
+      </a>
+  </div>
+   
+
+    <!-- ChartJS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var originCtx = document.getElementById('originChart').getContext('2d');
+  var destinationCtx = document.getElementById('destinationChart').getContext('2d');
+
+  var originChart = new Chart(originCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ municipios_origin|safe }},
+      datasets: [{
+        label: 'Cantidad de viajes de origen',
+        data: {{ counts_origin|safe }},
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1, // Asegura que los pasos sean de 1 en el eje Y
+            callback: function(value) {
+              if (Number.isInteger(value)) {
+                return value;  // Solo muestra números enteros
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+
+  var destinationChart = new Chart(destinationCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ municipios_destination|safe }},
+      datasets: [{
+        label: 'Cantidad de viajes de destino',
+        data: {{ counts_destination|safe }},
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1, // Asegura que los pasos sean de 1 en el eje Y
+            callback: function(value) {
+              if (Number.isInteger(value)) {
+                return value;  // Solo muestra números enteros
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+
+  </body>
+</html>

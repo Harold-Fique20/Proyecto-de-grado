@@ -5,7 +5,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js"></script>
-
+ 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -23,7 +23,7 @@
     <!-- Theme style -->
     <link href="static/accounts/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="static/accounts/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-
+ 
     <style>
     body {
         background-color: #f8f9fa;
@@ -42,17 +42,17 @@
         margin-right: 5px;
     }
     .logo {
-          color: #FFFFFF; 
-          text-decoration: none; 
+          color: #FFFFFF;
+          text-decoration: none;
           font-family: 'Arial', sans-serif;
-          font-size: 24px; 
-          text-shadow: 2px 2px 4px #000000; 
+          font-size: 24px;
+          text-shadow: 2px 2px 4px #000000;
         }
         .logo .admin {
           font-weight: normal;
-          color: #FFFFFF; 
+          color: #FFFFFF;
         }
-
+ 
   </style>
 </head>
 <body class="skin-green">
@@ -113,12 +113,12 @@
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>          
         </div>
-
+ 
      
         <!-- MENÚ PRINCIPAL-->
         <ul class="sidebar-menu">
           <li class="header">MENÚ PRINCIPAL</li>
-
+ 
           <!-- USUARIOS-->
           <li class="active treeview">
             <a href="{% url 'usuario' %}">
@@ -127,35 +127,35 @@
               <span class="label label-primary pull-right"></span>
             </a>
           </li>
-
+ 
           <!-- REPORTES-->
           <li class="active treeview">
             <a href="#">
-              <i class="fa fa-dashboard"></i> 
-              <span>Reportes</span> 
+              <i class="fa fa-dashboard"></i>
+              <span>Reportes</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-              <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-              <li class="active"><a href="{% url 'principal' %}"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+              <li><a href="{% url 'reporteRutas' %}"><i class="fa fa-circle-o"></i> Reporte Rutas</a></li>
+              <li><a href="{% url 'reporte_municipio' %}"><i class="fa fa-circle-o"></i> Reporte Municipios</a></li>
+              <li><a href="{% url 'reporteUsuariosDestacados' %}"><i class="fa fa-circle-o"></i> Reporte Usuarios Destacados</a></li>
             </ul>
           </li>
-
+ 
           <!-- DOCUMENTACIÓN-->
           <li>
             <a href="{% url 'documento' %}">
               <i class="fa fa-envelope"></i> <span>Documentación</span>
             </a>
           </li>
-
+ 
           <!-- RESEÑAS-->
           <li>
             <a href="{% url 'resena' %}">
               <i class="fa fa-th"></i> <span>Reseñas</span>
             </a>
           </li>
-
+ 
           <!-- ADMINISTRADORES-->
           <li class="active treeview">
             <a href="{% url 'cuentas' %}">
@@ -198,7 +198,7 @@
                                           <td>{{ user.apellidos }}</td>
                                           <td>{{ user.telefono }}</td>
                                           <td>{{ user.email }}</td>
-                        
+                       
                                           <td>
                                             <form action="{% url 'eliminar_usuario' user.email %}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
                                               {% csrf_token %}
@@ -213,15 +213,20 @@
                                         </td>
                                         </tr>
                                     {% endfor %}
-                                </tbody>                                                           
+                                </tbody>                                                          
                               </table>
                           </div><!-- /.table-responsive -->
                       </div><!-- /.box-body -->
                   </div><!-- /.box -->
+                  <div style="text-align: right; margin-top: 10px;">
+                    <a href="{% url 'descargar_historial_pdf' %}" class="btn btn-danger" style="background-color: #ff0000; color: white;">
+                        Descargar usuarios UdeC PDF
+                    </a>
+                </div>
               </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
-
+ 
         <!-- TABLA DE USUARIOS invitados -->
         <section class="content">
           <div class="row">
@@ -252,7 +257,7 @@
                                           <td>{{ user.apellidos }}</td>
                                           <td>{{ user.telefono }}</td>
                                           <td>{{ user.email }}</td>
-                        
+                       
                                           <td>
                                             <form action="{% url 'eliminar_usuario' user.email %}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este invitado?');">
                                               {% csrf_token %}
@@ -267,15 +272,20 @@
                                         </td>
                                         </tr>
                                     {% endfor %}
-                                </tbody>                                                             
+                                </tbody>                                                            
                               </table>
                           </div><!-- /.table-responsive -->
                       </div><!-- /.box-body -->
                   </div><!-- /.box -->
+                  <div style="text-align: right; margin-top: 10px;">
+                    <a href="{% url 'descargar_invitados_pdf' %}" class="btn btn-danger" style="background-color: #ff0000; color: white;">
+                        Descargar usuarios invitados PDF
+                    </a>
+                </div>
               </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
-
+ 
         <!-- /.TABLA DE USUARIOS bloqueados -->
         <section class="content">
           <div class="row">
@@ -306,7 +316,7 @@
                                       <td>{{ user.apellidos }}</td>
                                       <td>{{ user.telefono }}</td>
                                       <td>{{ user.email }}</td>
-                    
+                   
                                     <td>
                                         <form action="{% url 'desbloquear_usuario' user.email %}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas desbloquear este usuario?');">
                                             {% csrf_token %}
@@ -315,19 +325,24 @@
                                     </td>
                                   </tr>
                                 {% endfor %}
-                            </tbody>                                                           
+                            </tbody>                                                          
                           </table>
                       </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
               </div><!-- /.box -->
+              <div style="text-align: right; margin-top: 10px;">
+                <a href="{% url 'descargar_bloqueados' %}" class="btn btn-danger" style="background-color: #ff0000; color: white;">
+                    Descargar usuarios bloqueados PDF
+                </a>
+            </div>
           </div><!-- /.col -->
       </div><!-- /.row -->
     </section><!-- /.content -->
-
-
+ 
+ 
       </div><!-- /.content-wrapper -->
     </div>
-
+ 
     <!-- jQuery 2.1.3 -->
     <script src="{% static 'accounts/js/plugins/jQuery/jQuery-2.1.3.min.js'%}"></script>
     <!-- Bootstrap 3.3.2 JS -->
@@ -351,9 +366,9 @@
     <script src="{% static 'accounts/js/plugins/slimScroll/jquery.slimscroll.min.js'%}" ></script>
     <!-- ChartJS 1.0.1 -->
     <script src="{% static 'accounts/js/plugins/chartjs/Chart.min.js'%}" ></script>
-
-    
-
+ 
+   
+ 
     <!-- AdminLTE for demo purposes -->
     <script src="{% static 'accounts/js/demo.js'%}" ></script>
   </body>
