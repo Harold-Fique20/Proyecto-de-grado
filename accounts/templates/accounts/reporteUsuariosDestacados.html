@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Administración | Gou II</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="static/accounts/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="static/accounts/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/accounts/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      .logo {
+        color: #FFFFFF;
+        text-decoration: none;
+        font-family: 'Arial', sans-serif;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px #000000;
+      }
+      .logo .admin {
+        font-weight: normal;
+        color: #FFFFFF;
+      }
+
+      /* Estilos para centrar el título */
+      .titulo-centrado {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      /* Estilos para el cuadro verde claro con efecto hover */
+      .usuario-destacado {
+    background-color: #ccffcc; /* Verde claro */
+    border: 2px solid #99cc99; /* Borde verde oscuro */
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+    max-width: 400px; /* Limitar el ancho máximo */
+    margin: 0 auto; /* Centrar el cuadro */
+  }
+
+  /* Efecto hover para cambiar el fondo a verde más oscuro */
+  .usuario-destacado:hover {
+    background-color: #99cc99; /* Verde más oscuro */
+  }
+   /* Alinear los textos */
+   .usuario-destacado p {
+    text-align: left;
+  }
+
+      
+
+       /* Forzar que el texto del nombre y apellido tenga la primera letra en mayúscula */
+  .highlight {
+    text-transform: capitalize;
+    font-weight: bold;
+  }
+  /* Estilo para la imagen */
+  .usuario-destacado img {
+    display: block;
+    margin: 0 auto 15px;
+  }
+    </style>
+  </head>
+  <body class="skin-green">
+    <div class="wrapper">
+      <header class="main-header">    
+          <a href="{% url 'principal' %}" class="logo">
+            <span class="admin">{{ usuario.rol }}</span>
+          </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only"></span>
+          </a>
+          <!-- Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <img src="data:image/png;base64,{{ image_data }}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">{{ usuario.nombre }} {{ usuario.apellido }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="user-header">
+                    <img src="data:image/png;base64,{{ image_data }}" class="user-image" alt="User Image">
+                    <div style="text-align: center; padding: 20px;">
+                      <h2 style="margin: 0; font-size: 24px; color: #f1e9e9; font-weight: 600;">{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+                      <p style="margin: 5px 0; font-size: 18px; color: #eaeef3; font-weight: 500;">{{ usuario.rol }}</p>
+                        <small>Universidad de Cundinamarca</small>
+                      </p>
+                    </div>
+                  </li>
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="{% url 'config' %}" class="btn btn-default btn-flat">Configuración</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="{% url 'login' %}" class="btn btn-default btn-flat">Cerrar sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="data:image/jpg;base64,{{ image_data }}" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+              <p>{{ usuario.nombre }} {{ usuario.apellido }}</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>          
+          </div>
+          <!-- MENÚ PRINCIPAL -->
+          <ul class="sidebar-menu">
+            <li class="header">MENÚ PRINCIPAL</li>
+            <li class="active treeview">
+              <a href="{% url 'usuario' %}">
+                <i class="fa fa-users"></i>
+                <span>Usuarios</span>
+              </a>
+            </li>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i>
+                <span>Reportes</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'reporteRutas' %}"><i class="fa fa-circle-o"></i> Reporte Rutas</a></li>
+                <li><a href="{% url 'reporte_municipio' %}"><i class="fa fa-circle-o"></i> Reporte Municipios</a></li>
+                <li><a href="{% url 'reporteUsuariosDestacados' %}"><i class="fa fa-circle-o"></i> Reporte Usuarios Destacados</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{% url 'documento' %}">
+                <i class="fa fa-envelope"></i> <span>Documentación</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'resena' %}">
+                <i class="fa fa-th"></i> <span>Reseñas</span>
+              </a>
+            </li>
+            <li class="active treeview">
+              <a href="{% url 'cuentas' %}">
+                <i class="fa fa-user"></i>
+                <span>Administrador</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <div class="content-wrapper">
+        <section class="content">
+          <div class="container">
+            <h1 class="titulo-centrado">🎉 Usuarios Destacados 🎉</h1>
+            
+            {% if usuarios_destacados %}
+                <!-- Iterar sobre los usuarios destacados -->
+                {% for usuario in usuarios_destacados %}
+                    <div class="usuario-destacado">
+                        <img src="data:image/png;base64,{{ usuario.imagen }}" class="img-circle" alt="Imagen del Usuario Destacado" width="150" height="150">
+                        
+                        <p><strong>👤 Nombre:</strong> <span class="highlight">{{ usuario.nombre }} {{ usuario.apellidos }}</span></p>
+                        <p><strong>📧 Email:</strong> {{ usuario.email }}</p>
+                        <p><strong>📞 Teléfono:</strong> {{ usuario.telefono|default:"No disponible" }}</p>
+                        <p><strong>⭐ Calificación:</strong> {{ usuario.calificacionUser }}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+           
+            {% endif %}
+          
+            <div style="text-align: right; margin-top: 10px;">
+              <a href="{% url 'descargar_usu_desta' %}" class="btn btn-danger" style="background-color: #ff0000; color: white;">
+                Descargar usuarios destacados PDF
+              </a>
+            </div>
+          </div>
+        </section>
+      </div><!-- /.content-wrapper -->
+    </div>
+
+    <!-- jQuery y otros scripts -->
+    <script src="{% static 'accounts/js/plugins/jQuery/jQuery-2.1.3.min.js'%}"></script>
+    <script src="{% static 'accounts/js/bootstrap.min.js'%}" ></script>
+    <script src="{% static 'accounts/js/app.min.js'%}"></script>
+  </body>
+</html>

@@ -7,24 +7,14 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-5q9@&9d@m&$huwgtoe3g*a%m-c&#+du)u=f&+1^vtq0p&s(5z('
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,11 +59,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Gou.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com' # por ejemplo: 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465  
+EMAIL_USE_SSL = True  
+EMAIL_USE_TLS = False  
 EMAIL_HOST_USER = 'gou2udec@gmail.com' 
-EMAIL_HOST_PASSWORD = 'gou22024' 
+EMAIL_HOST_PASSWORD = 'fnmz tdas oydh wjvs'  
+
 
 
 
@@ -82,12 +74,14 @@ EMAIL_HOST_PASSWORD = 'gou22024'
 
 
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'Gou',  
+        'NAME': 'GoUV2',  
         'CLIENT': {
-            'host': 'mongodb+srv://GoU:gou22024@clustergou.0rlnvqb.mongodb.net/GoU?retryWrites=true&w=majority&appName=ClusterGoU',
+            'host': 'mongodb+srv://gouudec2024:gou22024@gouv2.fbdwx.mongodb.net/?retryWrites=true&w=majority&appName=GoUv2',
         }
     }
 }
@@ -109,4 +103,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'accounts/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 

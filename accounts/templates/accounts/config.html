@@ -63,7 +63,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #59ab6e;
+            background-color: #397548;
         }
 
     </style>
@@ -71,22 +71,23 @@
 <body>
     <div class="update-form">
         <h2>Actualización de datos</h2>
-        <form>
+        <form id="update-admin-form" enctype="multipart/form-data" method="post" action="{% url 'config' %}">
+            {% csrf_token %}
             <div class="form-field">
                 <label for="photo">Foto:</label>
-                <input type="file" id="photo" name="photo">
+                <input type="file" id="photo" name="photo" accept="image/*">
             </div>
             <div class="form-field">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name">
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-field">
-                <label for="email">Correo:</label>
-                <input type="email" id="email" name="email">
+                <label for="surname">Apellido:</label>
+                <input type="text" id="surname" name="surname" required>
             </div>
             <div class="form-field">
                 <label for="password">Nueva Contraseña:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" required>
             </div>
             <input type="submit" value="Actualizar">
         </form>

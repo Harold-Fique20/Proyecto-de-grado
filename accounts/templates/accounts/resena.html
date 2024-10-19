@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Administración | Gou II</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="static/accounts/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="static/accounts/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/accounts/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      .content-wrapper {
+    padding: 20px;
+}
+
+.title {
+    color: #333;
+    font-size: 24px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px; /* Ajuste para que no esté pegado a la parte superior */
+}
+
+/* Contenedor de todas las reseñas */
+.resenas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo para cada reseña */
+.resena-card {
+    background-color: #ffffff;
+    border: 1px solid #59ab6e;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.resena-card:hover {
+    transform: scale(1.02);
+}
+
+/* Estilo para el contenido de la reseña */
+.resena-body {
+    margin-bottom: 15px;
+}
+
+.resena-body p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.resena-text {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo para los botones */
+.resena-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.resena-actions .btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.resena-actions .btn-danger {
+    background-color: #dc3545;
+}
+
+.resena-actions .btn-info {
+    background-color: #17a2b8;
+}
+
+.resena-actions .btn-success {
+    background-color: #28a745;
+}
+
+.resena-actions .btn:hover {
+    opacity: 0.8;
+}
+
+    
+    .logo {
+            color: #FFFFFF; 
+            text-decoration: none; 
+            font-family: 'Arial', sans-serif;
+            font-size: 24px; 
+            text-shadow: 2px 2px 4px #000000; 
+          }
+          .logo .admin {
+            font-weight: normal;
+            color: #FFFFFF; 
+          }
+
+  </style>
+  </head>
+  <body class="skin-green">
+    <div class="wrapper">
+      <header class="main-header">    
+          <a href="{% url 'principal' %}" class="logo">
+            <span class="admin">{{ usuario.rol }}</span>
+          </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only"></span>
+          </a>
+          <!-- Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <img src="data:image/png;base64,{{ image_data }}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">{{ usuario.nombre }} {{ usuario.apellido }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="data:image/png;base64,{{ image_data }}" class="user-image" alt="User Image">
+                    <div style="text-align: center; padding: 20px;">
+                      <h2 style="margin: 0; font-size: 24px; color: #f1e9e9; font-weight: 600;">{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+                      <p style="margin: 5px 0; font-size: 18px; color: #eaeef3; font-weight: 500;">{{ usuario.rol }}</p>
+                        <small>Universidad de Cundinamarca</small>
+                      </p>
+                    </div>
+                  </li>
+                  <!-- Botones -->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="{% url 'config' %}" class="btn btn-default btn-flat">Configuración</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="{% url 'login' %}" class="btn btn-default btn-flat">Cerrar sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="data:image/jpg;base64,{{ image_data }}" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+              <p>{{ usuario.nombre }} {{ usuario.apellido }}</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>          
+          </div>
+
+       
+          <!-- MENÚ PRINCIPAL-->
+          <ul class="sidebar-menu">
+            <li class="header">MENÚ PRINCIPAL</li>
+
+            <!-- USUARIOS-->
+            <li class="active treeview">
+              <a href="{% url 'usuario' %}">
+                <i class="fa fa-users"></i>
+                <span>Usuarios</span>
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+
+            <!-- REPORTES-->
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> 
+                <span>Reportes</span> 
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'reporteRutas' %}"><i class="fa fa-circle-o"></i> Reporte Rutas</a></li>
+                <li><a href="{% url 'reporte_municipio' %}"><i class="fa fa-circle-o"></i> Reporte Municipios</a></li>
+                <li><a href="{% url 'reporteUsuariosDestacados' %}"><i class="fa fa-circle-o"></i> Reporte Usuarios Destacados</a></li>
+              </ul>
+            </li>
+
+            <!-- DOCUMENTACIÓN-->
+            <li>
+              <a href="{% url 'documento' %}">
+                <i class="fa fa-envelope"></i> <span>Documentación</span>
+              </a>
+            </li>
+
+            <!-- RESEÑAS-->
+            <li>
+              <a href="{% url 'resena' %}">
+                <i class="fa fa-th"></i> <span>Reseñas</span>
+              </a>
+            </li>
+
+            <!-- ADMINISTRADORES-->
+            <li class="active treeview">
+              <a href="{% url 'cuentas' %}">
+                <i class="fa fa-user"></i>
+                <span>Administrador</span>
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper">
+        <section class="content">
+            <center><h2 class="title">Control de reseñas de servicios</h2></center>
+            <div class="resenas-container">
+                {% for resena in resenas %}
+                <div class="resena-card">
+                    <div class="resena-body">
+                        <p><strong>Email:</strong> {{ resena.email }}</p>
+                        <p><strong>Tipo:</strong> {{ resena.tipo }}</p>
+                        <hr style="border: none; border-top: 2px solid green; margin: 20px 0;">
+                        <center><p class="resena-text">Reseña</p></center>
+                        <p class="resena-title">{{ resena.resena }}</p>
+                        <hr style="border: none; border-top: 2px solid green; margin: 20px 0;">
+                        
+                    </div>
+                    <div class="resena-actions">
+                        <a class="btn btn-danger" href="{% url 'eliminar_resena' resena.id resena.tipo resena.email %}">Eliminar</a>
+                        <a class="btn btn-info" href="{% url 'advertir_resena' resena.id resena.tipo resena.email %}">Advertir</a>
+                        <a class="btn btn-success" href="{% url 'marcar_revisada' resena.id resena.tipo resena.email %}">Revisada</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+    
+    
+
+    </div>
+
+    <!-- jQuery 2.1.3 -->
+    <script src="{% static 'accounts/js/plugins/jQuery/jQuery-2.1.3.min.js'%}"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="{% static 'accounts/js/bootstrap.min.js'%}" ></script>
+    <!-- FastClick -->
+    <script src="{% static 'accounts/js/plugins/fastclick/fastclick.min.js'%}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'accounts/js/app.min.js'%}"></script>
+    <!-- Sparkline -->
+    <script src="{% static 'accounts/js/plugins/sparkline/jquery.sparkline.min.js'%}" ></script>
+    <!-- jvectormap -->
+    <script src="{% static 'accounts/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'%}"></script>
+    <script src="{% static 'accounts/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'%}" ></script>
+    <!-- daterangepicker -->
+    <script src="{% static 'accounts/js/plugins/daterangepicker/daterangepicker.js'%}" ></script>
+    <!-- datepicker -->
+    <script src="{% static 'accounts/js/plugins/datepicker/bootstrap-datepicker.js'%}" ></script>
+    <!-- iCheck -->
+    <script src="{% static 'accounts/js/plugins/iCheck/icheck.min.js'%}"></script>
+    <!-- SlimScroll 1.3.0 -->
+    <script src="{% static 'accounts/js/plugins/slimScroll/jquery.slimscroll.min.js'%}" ></script>
+    <!-- ChartJS 1.0.1 -->
+    <script src="{% static 'accounts/js/plugins/chartjs/Chart.min.js'%}" ></script>
+
+    
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'accounts/js/demo.js'%}" ></script>
+  </body>
+</html>

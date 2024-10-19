@@ -1,10 +1,9 @@
-<!-- HTML para la página de recuperación de contraseña -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RECUPERAR CONTRASEÑA</title>
+<title>Recuperar Contraseña</title>
 <style>
   /* CSS para la página de recuperación de contraseña */
   body {
@@ -17,86 +16,110 @@
     margin: 0;
   }
   .password-recovery-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
   }
   .password-recovery-container h2 {
-    color: #333;
+    color: #333333;
     text-align: center;
+    margin-bottom: 20px;
   }
   #password-recovery-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
   #email-input {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px;
+    border: 1px solid #dddddd;
     border-radius: 5px;
+    font-size: 16px;
   }
   #reset-password-button {
-    padding: 10px;
-    background-color: #59ab6e;
+    padding: 12px;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
   }
   #reset-password-button:hover {
-    background-color: #397548;
+    background-color: #218838;
+  }
+  #back-to-login {
+    margin-top: 15px;
+    text-align: center;
+  }
+  #back-to-login a {
+    color: #59ab6e;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  #back-to-login a:hover {
+    text-decoration: underline;
+  }
+  #message {
+    text-align: center;
+    color: #ff0000;
+    margin-top: 10px;
   }
 </style>
 </head>
 <body>
   <div class="password-recovery-container">
     <h2>Recuperar Contraseña</h2>
+    <p id="message"></p>
     <form id="password-recovery-form">
-        <input id="email-input" type="email" placeholder="Ingresa tu correo electrónico" required>
-        <button id="reset-password-button" type="submit">Enviar</button>
-      </form>
-      <p id="message"></p>
-      
+      <input id="email-input" type="email" placeholder="Ingresa tu correo electrónico" required>
+      <button id="reset-password-button" type="submit">Enviar</button>
+    </form>
+    <div id="back-to-login">
+      <a href="/login">Regresar al Login</a>
+    </div>
   </div>
-    <!-- JavaScript -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
-    <script>
-      // Configuración de Firebase
-      var firebaseConfig = {
-        apiKey: "AIzaSyBeBvJvQm9o9tOtzCoMPcs2UeJvnrbO-yM",
-        authDomain: "gou-adm.firebaseapp.com",
-        databaseURL: "firebase-adminsdk-3hxpk@gou-adm.iam.gserviceaccount.com",
-        projectId: "gou-adm",
-        storageBucket: "gou-adm.appspot.com",
-        messagingSenderId: "909645328534",
-        appId: "1:909645328534:web:ef4322959f52e7a99452b7",
-        measurementId: "G-1N1SH62VZV",
-      };
-      // Inicialización de Firebase
-      firebase.initializeApp(firebaseConfig);
   
-      // Función para enviar el correo de recuperación de contraseña
-    function sendPasswordResetEmail(email) {
-    firebase.auth().sendPasswordResetEmail(email)
-    .then(() => {
-      console.log('Correo de recuperación de contraseña enviado');
-      document.getElementById('message').textContent = 'Correo de recuperación de contraseña enviado exitosamente';
-    })
-    .catch((error) => {
-      console.error('Error al enviar el correo de recuperación de contraseña', error);
-      document.getElementById('message').textContent = 'No se pudo enviar el correo de recuperación de contraseña';
-    });
-}
+  <!-- JavaScript -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+  <script>
+    // Configuración de Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyBeBvJvQm9o9tOtzCoMPcs2UeJvnrbO-yM",
+      authDomain: "gou-adm.firebaseapp.com",
+      projectId: "gou-adm",
+      storageBucket: "gou-adm.appspot.com",
+      messagingSenderId: "909645328534",
+      appId: "1:909645328534:web:ef4322959f52e7a99452b7",
+      measurementId: "G-1N1SH62VZV"
+    };
+    // Inicialización de Firebase
+    firebase.initializeApp(firebaseConfig);
 
+    // Función para enviar el correo de recuperación de contraseña
+    function sendPasswordResetEmail(email) {
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          document.getElementById('message').textContent = 'Correo de recuperación de contraseña enviado exitosamente. Revisa tu bandeja de entrada.';
+          document.getElementById('message').style.color = '#28a745'; // Color verde para éxito
+        })
+        .catch((error) => {
+          document.getElementById('message').textContent = 'No se pudo enviar el correo de recuperación de contraseña. Intenta nuevamente.';
+          document.getElementById('message').style.color = '#dc3545'; // Color rojo para error
+          console.error('Error al enviar el correo de recuperación de contraseña', error);
+        });
+    }
 
     // Evento de clic del botón
-      document.getElementById('reset-password-button').addEventListener('click', (event) => {
+    document.getElementById('reset-password-button').addEventListener('click', (event) => {
       event.preventDefault(); // Previene la recarga de la página
       const email = document.getElementById('email-input').value;
-        sendPasswordResetEmail(email);
+      sendPasswordResetEmail(email);
     });
-    </script>
+  </script>
 </body>
 </html>
