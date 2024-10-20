@@ -15,7 +15,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS =['http://','proyecto-de-grado-producción.up.railway.app']
+CSRF_TRUSTED_ORIGINS =['http://','https://proyecto-de-grado-producción.up.railway.app']
  
 
 INSTALLED_APPS = [
