@@ -372,6 +372,7 @@ def usuario(request):
         return render(request, 'accounts/usuario.html', {'error': str(e)})
 
 
+
 # Visualizar los documentos
 def documento(request):
     collection_registros = db['RegistrosAutos']
