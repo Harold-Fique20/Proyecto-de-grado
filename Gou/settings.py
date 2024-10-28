@@ -90,8 +90,6 @@ DATABASES = {
 
 
 
-
-
 LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
