@@ -7,24 +7,16 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-5q9@&9d@m&$huwgtoe3g*a%m-c&#+du)u=f&+1^vtq0p&s(5z('
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
-# Application definition
+CSRF_TRUSTED_ORIGINS =['http://','https://proyecto-de-grado-producción.up.railway.app']
+ 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,7 +83,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'GoUV2',  
         'CLIENT': {
-            'host': 'mongodb+srv://gouudec2024:gou22024@gouv2.fbdwx.mongodb.net/?retryWrites=true&w=majority&appName=GoUv2',
+            'host': 'mongodb+srv://goumongodb:crisma2019@gou.onhle.mongodb.net/?retryWrites=true&w=majority&appName=GoU',
         }
     }
 }
@@ -113,6 +105,5 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'accounts/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 
