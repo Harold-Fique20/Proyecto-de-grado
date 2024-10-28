@@ -265,7 +265,7 @@ def config(request):
         collection = db['GoUadmin']
 
         if not firebase_admin._apps:
-            cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-7edb1a38f5.json')
+            cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-bd7a74ec98.json')
             firebase_admin.initialize_app(cred)
 
         try:
@@ -486,7 +486,7 @@ def resena(request):
 def eliminar_usuario(request, email):
 
     if not firebase_admin._apps:
-        cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-9f7b618dd2.json')
+        cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-912ff595ca.json')
         firebase_admin.initialize_app(cred)
     
     try:
@@ -516,7 +516,7 @@ def eliminar_usuario(request, email):
 
 def bloquear_usuario(request, email):
     if not firebase_admin._apps:
-        cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-9f7b618dd2.json')
+        cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-912ff595ca.json')
         firebase_admin.initialize_app(cred)
 
     try:
@@ -552,7 +552,7 @@ def bloquear_usuario(request, email):
 
 def desbloquear_usuario(request, email):
     if not firebase_admin._apps:
-        cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-9f7b618dd2.json')
+        cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-912ff595ca.json')
         firebase_admin.initialize_app(cred)
 
     try:
@@ -591,7 +591,7 @@ from firebase_admin import credentials, auth
 
 def eliminar_admin(request, email):
     if not firebase_admin._apps:
-        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-7edb1a38f5.json')
+        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-bd7a74ec98.json')
         firebase_admin.initialize_app(cred)
 
     try:
@@ -616,7 +616,7 @@ def eliminar_admin(request, email):
 
 def bloquear_admin(request, email):
     if not firebase_admin._apps:
-        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-7edb1a38f5.json')
+        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-bd7a74ec98.json')
         firebase_admin.initialize_app(cred)
 
     try:
@@ -645,7 +645,7 @@ def bloquear_admin(request, email):
 
 def desbloquear_admin(request, email):
     if not firebase_admin._apps:
-        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-7edb1a38f5.json')
+        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-bd7a74ec98.json')
         firebase_admin.initialize_app(cred)
 
     try:
@@ -674,7 +674,7 @@ def crear_administrador(request):
     if request.method == 'POST':
         collection = db['GoUadmin']
 
-        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-7edb1a38f5.json')
+        cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-bd7a74ec98.json')
         app = firebase_admin.initialize_app(cred, name='admin_app')
 
         nombre = request.POST.get('nombre')
