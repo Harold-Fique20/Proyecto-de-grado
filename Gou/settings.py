@@ -62,20 +62,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Gou.wsgi.application'
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465  
-EMAIL_USE_SSL = True  
+EMAIL_PORT = 465
 EMAIL_USE_TLS = False  
-EMAIL_HOST_USER = 'gou2udec@gmail.com' 
-EMAIL_HOST_PASSWORD = 'fnmz tdas oydh wjvs'  
-
-
-
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'gou2udec@gmail.com'
+EMAIL_HOST_PASSWORD = 'bnfm zcti bkwh polx'
 
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -94,7 +88,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC' 
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
