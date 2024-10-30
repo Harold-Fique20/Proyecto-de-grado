@@ -47,14 +47,14 @@ from reportlab.lib.enums import TA_LEFT
 
 if not firebase_admin._apps:
     # Inicialización global con la primera credencial
-    main_cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-a7703efeb7.json')
+    main_cred = credentials.Certificate('gouv2-b5056-firebase-adminsdk-mrmlq-c0917f72cf.json')
     firebase_admin.initialize_app(main_cred)
 
 # Inicializa una app secundaria con la segunda credencial
 try:
     secondary_app = firebase_admin.get_app('secondary')
 except ValueError:
-    admin_cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-a8a91d155a.json')
+    admin_cred = credentials.Certificate('gou-adm-firebase-adminsdk-3hxpk-9c8b49ddca.json')
     secondary_app = firebase_admin.initialize_app(admin_cred, name='secondary')
 
 
