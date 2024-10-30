@@ -94,7 +94,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'America/Bogota' 
+TIME_ZONE = 'UTC' 
 
 USE_I18N = True
 
@@ -105,5 +105,3 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'accounts/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
